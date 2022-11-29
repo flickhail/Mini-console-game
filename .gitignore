@@ -364,3 +364,7 @@ FodyWeavers.xsd
 
 *.vsxproj
 *.sln
+
+.vscode/
+build/
+*.vcxproj

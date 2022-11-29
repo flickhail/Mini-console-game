@@ -2,7 +2,7 @@
 #include "main.hpp"
 
 #include <iostream>
-#include <format>
+#include <sstream>
 
 // Prints the player stats
 void Player::Stats() const
@@ -70,12 +70,11 @@ Player::FightState GetFightInput(const std::string& inputPromt)
 // Prints info about monster encountered and gathers the player input
 Player::FightState Player::Encounter(const Monster &monster)
 {
-	const std::string infoMsg{ std::format("You encountered with: {}({}HP, {}dmg, {}gold)\n\n",
-								monster.Name(), monster.HP(), monster.Damage(), monster.Gold()) };
-
 	const std::string inputPromtMsg{ "1.Fight\n2.Run away\n>: " };
 
-	std::cout << infoMsg;
+	std::cout << "You encountered with: " << monster.Name()
+		<< "(" << monster.HP() << "HP, " << monster.Damage() << "dmg, "
+		<< monster.Gold() << "gold)";
 
 	FightState state{ GetFightInput(inputPromtMsg) };
 
