@@ -1,33 +1,37 @@
-#include <iostream>
-#include "Monster.h"
-#include "main.h"
+#include "Monster.hpp"
+#include "main.hpp"
 
-bool Monster::defined = false;
+#include <iostream>
 
 Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES]
 {
-	{ "dragon", 'D', 20, 4, 100 },
-	{ "orc", 'o', 4, 2, 25 },
-	{ "slime", 's', 1, 1, 10 }
+	{ "Dragon", 'D', 20, 4, 100 },
+	{ "Orc", 'o', 4, 2, 25 },
+	{ "Slime", 's', 1, 1, 10 }
 };
 
-Monster::Monster(Type a_type)
-	: Creature(monsterData[a_type].name, monsterData[a_type].symbol, monsterData[a_type].HP, monsterData[a_type].dmg, monsterData[a_type].gold)
+Monster::Monster(Type monsterType)
+	: Creature(monsterData[monsterType].name, monsterData[monsterType].symbol, monsterData[monsterType].HP, monsterData[monsterType].dmg, monsterData[monsterType].gold)
+{}
+
+// Gets a random monster from global monster data
+Monster Monster::GetRandomMonster()
 {
-	defined = true;
+	return { static_cast<Type>(GetRandomNumber(0, MAX_TYPES - 1)) };
 }
 
-Monster Monster::getRandomMonster()
+// Applies 'Monster::_Damage' to 'Player::_HealthPoints'
+// returns 'true' if player is dead, false otherwise
+bool Monster::HitPlayer(Player &player)
 {
-	return static_cast<Type>(getRandomNumber(0, MAX_TYPES - 1));
-}
+	std::cout << "\n" << Name() << " attacks you!\n";
+	player.ReduceHealth(_Damage);
 
-void Monster::hit(Player &p)
-{
-	std::cout << "\n" << getName() << " attacks you! ";
-	p.reduceHealth(damage);
-	std::cout << "(you have " << p.getHP() << "hp)\n";
-	if (p.isDead()) {
-		p.hasLost();
+	if (player.IsDead())
+	{
+		player.HasLost();
+		return true;
 	}
+
+	return false;
 }

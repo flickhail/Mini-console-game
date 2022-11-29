@@ -1,17 +1,21 @@
+#include "Creature.hpp"
+
 #include <iostream>
-#include "Creature.h"
 
-void Creature::reduceHealth(int value)
+// Reduces the health of this creature
+void Creature::ReduceHealth(int value)
 {
-	healthPoints -= value;
+	_HealthPoints -= value;
 }
 
-bool Creature::isDead() 
+// Checks whether the creature is dead or not
+bool Creature::IsDead() const
 {
-	return (healthPoints <= 0) ? true : false;
+	return (_HealthPoints <= 0) ? true : false;
 }
 
-void Creature::addGold(int value)
+// Adds gold to the creature
+void Creature::AddGold(int value)
 {
-	gold += value;
+	_Gold += value;
 }
